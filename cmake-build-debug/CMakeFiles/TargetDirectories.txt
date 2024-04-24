@@ -1,0 +1,3 @@
+/home/aaron/CLionProjects/LispInterpreter/cmake-build-debug/CMakeFiles/LispInterpreter.dir
+/home/aaron/CLionProjects/LispInterpreter/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/aaron/CLionProjects/LispInterpreter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
