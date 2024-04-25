@@ -25,7 +25,7 @@ private:
 
     std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
 public:
-    Parser()=default;
+    explicit Parser(std::shared_ptr<std::unordered_map<std::string, std::string>> variables) : variables(std::move(variables)) {};
     std::vector<std::shared_ptr<Node>> operator()(const std::string &input);
 
 };

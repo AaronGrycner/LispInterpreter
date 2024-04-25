@@ -13,9 +13,10 @@
 
 class Evaluator {
 private:
-    std::unordered_map<std::string, std::string> variables;
+    std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
 
 public:
+    explicit Evaluator(std::shared_ptr<std::unordered_map<std::string, std::string>> vars) : variables(std::move(vars)) {}
     std::string operator()(const std::vector<std::shared_ptr<Node>>& node);
 
 };

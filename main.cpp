@@ -7,8 +7,9 @@
 // 1. Implement the Parser class
 
 int main() {
-    Parser parser;
-    Evaluator evaluator;;
+    std::unordered_map<std::string, std::string> variables;
+    Parser parser(std::make_shared<std::unordered_map<std::string, std::string>>(variables));
+    Evaluator evaluator(std::make_shared<std::unordered_map<std::string, std::string>>(variables));
     std::vector<std::shared_ptr<Node>> parsed;
 
     while (true) {

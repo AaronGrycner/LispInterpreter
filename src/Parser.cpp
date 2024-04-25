@@ -32,8 +32,6 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
 
     Token token = *it++;
 
-    std::cout << "Token: " << token.get_value() << std::endl;
-
     std::shared_ptr<Node> node;
 
     switch (token.get_type()) {
@@ -47,8 +45,15 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             node = std::make_shared<BooleanNode>(token.get_value() == "T");
             break;
         case TokenType::SYMBOL:
+
+            if (variables->find(token.get_value()) != variables->end()) {
+                node = std::make_shared<NumberNode>(std::stod(variables->at(token.get_value())));
+                break;
+            }
+
             node = std::make_shared<SymbolNode>(token.get_value());
             break;
+
         case TokenType::CONDITIONAL:
             node = parse_conditional(it, end);
             break;
@@ -136,31 +141,24 @@ std::shared_ptr<Node> Parser::parse_condition(std::vector<Token>::iterator &it, 
 
 std::shared_ptr<Node> Parser::parse_define(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     if (it == end) {
-        throw std::runtime_error("Unexpected end of input before define statement");
+        throw std::runtime_error("Unexpected end of input after 'define'");
     }
 
-    // Expecting the next token to be SYMBOL, representing the variable name
+    // First token after 'define' should be the variable name (symbol)
     if (it->get_type() != TokenType::SYMBOL) {
         throw std::runtime_error("Expected a variable name after 'define'");
     }
-    auto varName = std::make_shared<SymbolNode>(it->get_value());
+    std::string varName = it->get_value();
     ++it; // Move past the variable name
 
     if (it == end) {
-        throw std::runtime_error("Incomplete define expression: missing value");
+        throw std::runtime_error("Incomplete 'define' expression: missing value");
     }
 
     // Parse the value expression which can be any valid expression
-    auto value = parse_expression(it, end);
+    std::shared_ptr<Node> value = parse_expression(it, end);
 
-    // Expecting the next token to be the closing parenthesis after the expression
-    if (it == end || it->get_type() != TokenType::CLOSE_PAREN) {
-        throw std::runtime_error("Expected ')' at the end of define expression");
-    }
-    ++it; // Move past the closing parenthesis
-
+    // Assuming closing ')' is consumed by the caller or handling at the list parsing level
     return std::make_shared<DefineNode>(varName, value, variables);
 }
-
-
 
