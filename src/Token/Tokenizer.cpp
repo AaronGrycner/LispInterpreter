@@ -33,10 +33,10 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
                     tokens.emplace_back(TokenType::QUOTE, "'");
                     break;
                 case '>':
-                    tokens.emplace_back(TokenType::GREATER_THAN, ">");
+                    tokens.emplace_back(TokenType::SYMBOL, ">");
                     break;
                 case '<':
-                    tokens.emplace_back(TokenType::LESS_THAN, "<");
+                    tokens.emplace_back(TokenType::SYMBOL, "<");
                     break;
                 default:
                     // Handle other symbols as identifiers or error

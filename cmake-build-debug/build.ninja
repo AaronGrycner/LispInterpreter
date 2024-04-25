@@ -56,13 +56,6 @@ build CMakeFiles/LispInterpreter.dir/main.cpp.o: CXX_COMPILER__LispInterpreter_u
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir
 
-build CMakeFiles/LispInterpreter.dir/src/Nodes/Nodes.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Nodes/Nodes.cpp || cmake_object_order_depends_target_LispInterpreter
-  DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Nodes/Nodes.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
-  OBJECT_DIR = CMakeFiles/LispInterpreter.dir
-  OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src/Nodes
-
 build CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Parser.cpp || cmake_object_order_depends_target_LispInterpreter
   DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
@@ -98,13 +91,6 @@ build CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o: CXX_COMPILER__LispInte
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src
 
-build CMakeFiles/LispInterpreter.dir/src/Nodes/Conditional.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Nodes/Conditional.cpp || cmake_object_order_depends_target_LispInterpreter
-  DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Nodes/Conditional.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
-  OBJECT_DIR = CMakeFiles/LispInterpreter.dir
-  OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src/Nodes
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target LispInterpreter
@@ -113,7 +99,7 @@ build CMakeFiles/LispInterpreter.dir/src/Nodes/Conditional.cpp.o: CXX_COMPILER__
 #############################################
 # Link the executable LispInterpreter
 
-build LispInterpreter: CXX_EXECUTABLE_LINKER__LispInterpreter_Debug CMakeFiles/LispInterpreter.dir/main.cpp.o CMakeFiles/LispInterpreter.dir/src/Nodes/Nodes.cpp.o CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o CMakeFiles/LispInterpreter.dir/src/Symbols/SymbolTable.cpp.o CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o CMakeFiles/LispInterpreter.dir/src/Nodes/Conditional.cpp.o
+build LispInterpreter: CXX_EXECUTABLE_LINKER__LispInterpreter_Debug CMakeFiles/LispInterpreter.dir/main.cpp.o CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o CMakeFiles/LispInterpreter.dir/src/Symbols/SymbolTable.cpp.o CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   POST_BUILD = :

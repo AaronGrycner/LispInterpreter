@@ -2,12 +2,26 @@
 #include <stdexcept>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 
 std::string ListNode::evaluate() {
     if (nodes.empty()) {
         return "Empty list";
     }
 
+    switch(nodes.at(0)->get_type()) {
+        case NodeType::SYMBOL:
+            return evaluate_symbol();
+        case NodeType::CONDITIONAL:
+            return nodes.at(0)->evaluate();
+        default:
+            throw std::runtime_error("Unexpected token type in list");
+    }
+
+
+}
+
+std::string ListNode::evaluate_symbol() {
     std::string symbol = nodes.at(0)->get_value();
     if (symbol == "+") {
         return evaluate_sum();
@@ -17,8 +31,9 @@ std::string ListNode::evaluate() {
         return evaluate_mult();
     } else if (symbol == "/") {
         return evaluate_div();
-    } else {
-        return "Unsupported operation: " + symbol;
+    }
+    else {
+        throw std::runtime_error("Unsupported operation: " + symbol);
     }
 }
 

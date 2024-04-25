@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 add_executable(LispInterpreter main.cpp
-        src/Nodes/Nodes.cpp
         include/Nodes/Nodes.h
         src/Parser.cpp
         include/Parser.h
@@ -20,7 +19,6 @@ add_executable(LispInterpreter main.cpp
         src/Evaluator.cpp
         include/Evaluator.h
         include/Nodes/Conditional.h
-        src/Nodes/Conditional.cpp
 )
 
 target_include_directories(LispInterpreter PUBLIC

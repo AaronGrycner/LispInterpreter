@@ -4,6 +4,8 @@
 #include "Parser.h"
 #include "Token/Tokenizer.h"
 #include "Nodes/Atoms.h"
+#include "Nodes/Conditional.h"
+#include <iostream>
 
 using namespace Tokens;
 
@@ -28,6 +30,7 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
     }
 
     Token token = *it++;
+
     std::shared_ptr<Node> node;
 
     switch (token.get_type()) {
@@ -42,6 +45,9 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             break;
         case TokenType::SYMBOL:
             node = std::make_shared<SymbolNode>(token.get_value());
+            break;
+        case TokenType::CONDITIONAL:
+            node = parse_conditional(it, end);
             break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
@@ -61,18 +67,63 @@ std::shared_ptr<ListNode> Parser::parse_list(std::vector<Token>::iterator &it, c
         throw std::runtime_error("Unexpected end of input");
     }
 
-    ++it; // Move past the closing parenthesis
+    ++it;
+
     return list;
 }
 
-std::vector<Token>::iterator Parser::find_enclosing_parenthesis(std::vector<Token> tokens, std::vector<Token>::iterator it) {
-    auto end_it = tokens.end() - 1;
-
-    while (end_it->get_type() != TokenType::CLOSE_PAREN){
-        if (end_it == it){
-            throw std::runtime_error("No closing parenthesis found");
-        }
-        --end_it;
+std::shared_ptr<ConditionalNode> Parser::parse_conditional(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input");
     }
-    return end_it;
+
+    // No need to check for OPEN_PAREN as 'if' directly leads to the condition in your syntax
+    // Parse condition
+    std::shared_ptr<Node> condition = parse_condition(it, end);
+    if (it == end) throw std::runtime_error("Incomplete conditional expression");
+
+    // Parse consequent branch
+    std::shared_ptr<Node> true_branch = parse_expression(it, end);
+    if (it == end) throw std::runtime_error("Incomplete conditional expression");
+
+    // Parse alternative branch
+    std::shared_ptr<Node> false_branch = parse_expression(it, end);
+    if (it == end) throw std::runtime_error("Incomplete conditional expression");
+
+    // Ensure that you're now at the end of this conditional expression, usually a closing parenthesis in Lisp syntax
+    if (it->get_type() != TokenType::CLOSE_PAREN) {
+        throw std::runtime_error("Expected ')' at the end of conditional");
+    }
+
+    return std::make_shared<ConditionalNode>(condition, true_branch, false_branch);
+}
+
+// Adjusted parse_condition to handle unary operators
+std::shared_ptr<Node> Parser::parse_condition(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    if (it == end) throw std::runtime_error("Unexpected end of input while parsing condition");
+    if (it->get_type() != TokenType::OPEN_PAREN) throw std::runtime_error("Expected '(' at start of condition");
+    ++it;
+
+    if (it == end || it->get_type() != TokenType::SYMBOL)
+        throw std::runtime_error("Expected condition operator after '('");
+    std::string operator_ = it->get_value();
+    ++it;
+
+    std::shared_ptr<Node> leftOperand = parse_expression(it, end);
+    if (operator_ == "not") {  // Unary operator
+        if (it->get_type() != TokenType::CLOSE_PAREN) throw std::runtime_error("Expected ')' after unary condition");
+        ++it;
+        return std::make_shared<ConditionNode>(operator_, leftOperand, nullptr);
+    }
+
+    // Continue for binary operators
+    if (it == end) throw std::runtime_error("Unexpected end of input while parsing first operand of condition");
+    std::shared_ptr<Node> rightOperand = parse_expression(it, end);
+    if (it == end) throw std::runtime_error("Unexpected end of input while parsing second operand of condition");
+
+    if (it->get_type() != TokenType::CLOSE_PAREN) throw std::runtime_error("Expected ')' at end of condition");
+
+    ++it;
+
+    return std::make_shared<ConditionNode>(operator_, leftOperand, rightOperand);
 }

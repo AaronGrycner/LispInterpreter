@@ -33,6 +33,10 @@ public:
     [[nodiscard]] const std::vector<std::shared_ptr<Node>>& get_nodes() { return nodes; }
 
     std::string evaluate() override;
+
+    std::string evaluate_symbol();
+
+    std::string evaluate_conditional();
 };
 
 
