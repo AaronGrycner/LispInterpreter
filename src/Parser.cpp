@@ -6,6 +6,7 @@
 #include "Nodes/Atoms.h"
 #include "Nodes/Conditional.h"
 #include "Nodes/Define.h"
+#include "Nodes/QuoteNode.h"
 #include <iostream>
 
 using namespace Tokens;
@@ -17,6 +18,12 @@ NodeVec Parser::operator()(const std::string &input) {
     std::vector<std::shared_ptr<Node>> nodes;
 
     auto it = tokens.begin();
+
+    if (it->get_type() == TokenType::QUOTE) {
+        tokens.erase(tokens.begin());
+        nodes.push_back(std::make_shared<QuoteNode>(tokens));
+        return nodes;
+    }
 
     while (it != tokens.end()) {
         nodes.push_back(parse_expression(it, tokens.end()));

@@ -5,6 +5,8 @@
 #ifndef LISPINTERPRETER_ATOMS_H
 #define LISPINTERPRETER_ATOMS_H
 
+#include <cstdint>
+
 #include "Nodes.h"
 
 class AtomNode : public Node {
@@ -20,10 +22,10 @@ class AtomNode : public Node {
 
 class NumberNode : public AtomNode {
 private:
-    float number;
+    int32_t number;
 
 public:
-    explicit NumberNode(float v) : number(v) {
+    explicit NumberNode(int32_t v) : number(v) {
         type = NodeType::NUMBER;
         value = std::to_string(v);
     }

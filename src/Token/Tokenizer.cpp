@@ -1,5 +1,6 @@
 #include <sstream>
 #include <cctype>
+#include <cstdint>
 #include "include/Token/Tokenizer.h"
 
 using namespace Tokens;
@@ -16,7 +17,7 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
         if (std::isdigit(ch) || (ch == '-' && std::isdigit(iss.peek()))) {
             // Handle numbers
             iss.putback(ch);
-            double num;
+            int32_t num;
             iss >> num;
             tokens.emplace_back(TokenType::NUMBER, std::to_string(num));
         }

@@ -19,8 +19,6 @@ std::string ListNode::evaluate() {
         default:
             throw std::runtime_error("Unexpected token type in list");
     }
-
-
 }
 
 std::string ListNode::evaluate_symbol() {
@@ -39,61 +37,55 @@ std::string ListNode::evaluate_symbol() {
 }
 
 std::string ListNode::evaluate_sum() {
-    float ans = 0;
+    int32_t ans = 0;
     try {
         for (size_t i = 1; i < nodes.size(); i++) {
-            ans += std::stof(nodes[i]->evaluate());
+            ans += std::stoi(nodes[i]->evaluate());
         }
     } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in addition";
     }
-    return format_float(ans);
+    return std::to_string(ans);
 }
 
 std::string ListNode::evaluate_sub() {
     if (nodes.size() < 2) return "Error: Insufficient arguments for subtraction";
-    float ans;
+    int32_t ans;
     try {
-        ans = std::stof(nodes[1]->evaluate());
+        ans = std::stoi(nodes[1]->evaluate());
         for (size_t i = 2; i < nodes.size(); i++) {
-            ans -= std::stof(nodes[i]->evaluate());
+            ans -= std::stoi(nodes[i]->evaluate());
         }
     } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in subtraction";
     }
-    return format_float(ans);
+    return std::to_string(ans);
 }
 
 std::string ListNode::evaluate_mult() {
-    float ans = 1;
+    int32_t ans = 1;
     try {
         for (size_t i = 1; i < nodes.size(); i++) {
-            ans *= std::stof(nodes[i]->evaluate());
+            ans *= std::stoi(nodes[i]->evaluate());
         }
     } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in multiplication";
     }
-    return format_float(ans);
+    return std::to_string(ans);
 }
 
 std::string ListNode::evaluate_div() {
     if (nodes.size() < 2) return "Error: Insufficient arguments for division";
-    float ans;
+    int32_t ans;
     try {
-        ans = std::stof(nodes[1]->evaluate());
+        ans = std::stoi(nodes[1]->evaluate());
         for (size_t i = 2; i < nodes.size(); i++) {
-            float divisor = std::stof(nodes[i]->evaluate());
+            int32_t divisor = std::stoi(nodes[i]->evaluate());
             if (divisor == 0) return "Error: Division by zero";
             ans /= divisor;
         }
     } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in division";
     }
-    return format_float(ans);
-}
-
-std::string ListNode::format_float(float value) {
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(2) << value;
-    return oss.str();
+    return std::to_string(ans);
 }

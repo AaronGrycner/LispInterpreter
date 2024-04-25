@@ -14,7 +14,8 @@ enum NodeType {
     BOOLEAN,
     NUMBER,
     CONDITIONAL,
-    DEFINE
+    DEFINE,
+    QUOTE
 };
 
 class Node {

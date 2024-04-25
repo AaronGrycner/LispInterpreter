@@ -20,6 +20,8 @@ add_executable(LispInterpreter main.cpp
         include/Evaluator.h
         include/Nodes/Conditional.h
         include/Nodes/Define.h
+        include/Nodes/QuoteNode.h
+        include/Nodes/QuoteNode.h
 )
 
 target_include_directories(LispInterpreter PUBLIC

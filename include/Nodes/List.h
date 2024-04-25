@@ -20,7 +20,6 @@ private:
     std::string evaluate_mult();
     std::string evaluate_div();
 
-    static std::string format_float(float value);
 
 public:
     ListNode() {
@@ -35,8 +34,6 @@ public:
     std::string evaluate() override;
 
     std::string evaluate_symbol();
-
-    std::string evaluate_conditional();
 };
 
 
