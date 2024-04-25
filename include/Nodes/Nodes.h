@@ -13,7 +13,8 @@ enum NodeType {
     LIST,
     BOOLEAN,
     NUMBER,
-    CONDITIONAL
+    CONDITIONAL,
+    DEFINE
 };
 
 class Node {
@@ -23,7 +24,9 @@ protected:
 
 public:
     virtual std::string evaluate() = 0;
-    [[nodiscard]] std::string get_value() const { return value; }
+    virtual ~Node() = default;
+
+    [[nodiscard]] virtual std::string get_value() const { return value; }
     [[nodiscard]] NodeType get_type() const { return type; }
 };
 

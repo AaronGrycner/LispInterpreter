@@ -6,11 +6,18 @@
 #define LISPINTERPRETER_EVALUATOR_H
 
 #include <memory>
+#include <unordered_map>
+
 #include "Nodes/Nodes.h"
+#include "Nodes/Define.h"
 
 class Evaluator {
+private:
+    std::unordered_map<std::string, std::string> variables;
+
 public:
     std::string operator()(const std::vector<std::shared_ptr<Node>>& node);
+
 };
 
 

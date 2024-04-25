@@ -9,10 +9,12 @@ std::string ListNode::evaluate() {
         return "Empty list";
     }
 
-    switch(nodes.at(0)->get_type()) {
+    switch (nodes.at(0)->get_type()) {
         case NodeType::SYMBOL:
             return evaluate_symbol();
         case NodeType::CONDITIONAL:
+            return nodes.at(0)->evaluate();
+        case NodeType::DEFINE:
             return nodes.at(0)->evaluate();
         default:
             throw std::runtime_error("Unexpected token type in list");
@@ -31,8 +33,7 @@ std::string ListNode::evaluate_symbol() {
         return evaluate_mult();
     } else if (symbol == "/") {
         return evaluate_div();
-    }
-    else {
+    } else {
         throw std::runtime_error("Unsupported operation: " + symbol);
     }
 }
@@ -43,7 +44,7 @@ std::string ListNode::evaluate_sum() {
         for (size_t i = 1; i < nodes.size(); i++) {
             ans += std::stof(nodes[i]->evaluate());
         }
-    } catch (const std::invalid_argument& e) {
+    } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in addition";
     }
     return format_float(ans);
@@ -57,7 +58,7 @@ std::string ListNode::evaluate_sub() {
         for (size_t i = 2; i < nodes.size(); i++) {
             ans -= std::stof(nodes[i]->evaluate());
         }
-    } catch (const std::invalid_argument& e) {
+    } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in subtraction";
     }
     return format_float(ans);
@@ -69,7 +70,7 @@ std::string ListNode::evaluate_mult() {
         for (size_t i = 1; i < nodes.size(); i++) {
             ans *= std::stof(nodes[i]->evaluate());
         }
-    } catch (const std::invalid_argument& e) {
+    } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in multiplication";
     }
     return format_float(ans);
@@ -85,7 +86,7 @@ std::string ListNode::evaluate_div() {
             if (divisor == 0) return "Error: Division by zero";
             ans /= divisor;
         }
-    } catch (const std::invalid_argument& e) {
+    } catch (const std::invalid_argument &e) {
         return "Error: Non-numeric argument in division";
     }
     return format_float(ans);

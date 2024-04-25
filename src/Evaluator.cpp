@@ -10,5 +10,3 @@ std::string Evaluator::operator()(const std::vector<std::shared_ptr<Node>>& node
     }
     return result.str();
 }
-
-

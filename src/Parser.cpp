@@ -5,6 +5,7 @@
 #include "Token/Tokenizer.h"
 #include "Nodes/Atoms.h"
 #include "Nodes/Conditional.h"
+#include "Nodes/Define.h"
 #include <iostream>
 
 using namespace Tokens;
@@ -31,6 +32,8 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
 
     Token token = *it++;
 
+    std::cout << "Token: " << token.get_value() << std::endl;
+
     std::shared_ptr<Node> node;
 
     switch (token.get_type()) {
@@ -48,6 +51,9 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             break;
         case TokenType::CONDITIONAL:
             node = parse_conditional(it, end);
+            break;
+        case TokenType::DEFINE:
+            node = parse_define(it, end);
             break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
@@ -127,3 +133,34 @@ std::shared_ptr<Node> Parser::parse_condition(std::vector<Token>::iterator &it, 
 
     return std::make_shared<ConditionNode>(operator_, leftOperand, rightOperand);
 }
+
+std::shared_ptr<Node> Parser::parse_define(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input before define statement");
+    }
+
+    // Expecting the next token to be SYMBOL, representing the variable name
+    if (it->get_type() != TokenType::SYMBOL) {
+        throw std::runtime_error("Expected a variable name after 'define'");
+    }
+    auto varName = std::make_shared<SymbolNode>(it->get_value());
+    ++it; // Move past the variable name
+
+    if (it == end) {
+        throw std::runtime_error("Incomplete define expression: missing value");
+    }
+
+    // Parse the value expression which can be any valid expression
+    auto value = parse_expression(it, end);
+
+    // Expecting the next token to be the closing parenthesis after the expression
+    if (it == end || it->get_type() != TokenType::CLOSE_PAREN) {
+        throw std::runtime_error("Expected ')' at the end of define expression");
+    }
+    ++it; // Move past the closing parenthesis
+
+    return std::make_shared<DefineNode>(varName, value, variables);
+}
+
+
+
