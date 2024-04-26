@@ -11,7 +11,7 @@
 #include <memory>
 
 class ListNode : public Node {
-private:
+protected:
     std::vector<std::shared_ptr<Node>>::iterator it;
     std::vector<std::shared_ptr<Node>> nodes;
 
@@ -21,8 +21,7 @@ private:
     std::string evaluate_div();
     std::string evaluate_sqrt();
     std::string evaluate_pow();
-    std::string evaluate_car();
-    std::string evaluate_cdr();
+    std::string evaluate_as_string();
 
 public:
     ListNode() {
@@ -37,7 +36,36 @@ public:
     std::string evaluate() override;
 
     std::string evaluate_symbol();
+
+    size_t get_nodes_size() { return nodes.size(); }
 };
 
+class CarNode : public ListNode {
+public:
+    CarNode() {
+        type = CAR;
+    }
+
+    std::string evaluate() override {
+        return nodes.at(0)->evaluate();
+    }
+};
+
+class CdrNode : public ListNode {
+public:
+    CdrNode() {
+        type = CDR;
+    }
+
+    std::string evaluate() override {
+        std::string buffer;
+
+        for (auto it = nodes.begin() + 1; it != nodes.end(); ++it) {
+            buffer += (*it)->evaluate() + " ";
+        }
+
+        return buffer;
+    }
+};
 
 #endif //LISPINTERPRETER_LIST_H

@@ -19,7 +19,10 @@ enum NodeType {
     DEFUN,
     FUNCTION,
     SET,
-    RELATION
+    RELATION,
+    CAR,
+    CDR,
+    CONS
 };
 
 class Node {

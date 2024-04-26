@@ -14,12 +14,13 @@ namespace Tokens {
         QUOTE,       // The quote symbol, e.g., '
         DEFINE,      // Define symbol, e.g., define
         SET,         // Set! symbol for variable assignment
-        CONDITIONAL,          // If conditional
+        CONDITIONAL, // If conditional
         LAMBDA,      // Lambda function definition
-        DEFUN,        // Function definition
+        DEFUN,       // Function definition
         RELATION,
         CAR,
-        CDR
+        CDR,
+        CONS
     };
 
     class Token {

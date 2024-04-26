@@ -25,8 +25,14 @@ std::string ListNode::evaluate() {
             return nodes.at(0)->evaluate();
         case NodeType::RELATION:
             return nodes.at(0)->evaluate();
+        case NodeType::CAR:
+            return nodes.at(0)->evaluate();
+        case NodeType::CDR:
+            return nodes.at(0)->evaluate();
+        case NodeType::CONS:
+            return nodes.at(0)->evaluate();
         default:
-            throw std::runtime_error("Unexpected token type in list");
+            throw std::runtime_error("Unexpected node type in list");
     }
 }
 
@@ -45,7 +51,7 @@ std::string ListNode::evaluate_symbol() {
     } else if (symbol == "pow") {
         return evaluate_pow();
     } else {
-        throw std::runtime_error("Unsupported operation: " + symbol);
+        return evaluate_as_string();
     }
 }
 
@@ -112,9 +118,9 @@ std::string ListNode::evaluate_sqrt() {
 
     try {
         operand = std::stoi(nodes[1]->evaluate());
-    } catch (const std::invalid_argument& e) {
+    } catch (const std::invalid_argument &e) {
         throw std::runtime_error("Non-numeric argument in sqrt");
-    } catch (const std::out_of_range& e) {
+    } catch (const std::out_of_range &e) {
         throw std::runtime_error("Argument out of range in sqrt");
     }
 
@@ -136,9 +142,9 @@ std::string ListNode::evaluate_pow() {
     try {
         base = std::stoi(nodes[1]->evaluate());
         exponent = std::stoi(nodes[2]->evaluate());
-    } catch (const std::invalid_argument& e) {
+    } catch (const std::invalid_argument &e) {
         throw std::runtime_error("Non-numeric argument in pow");
-    } catch (const std::out_of_range& e) {
+    } catch (const std::out_of_range &e) {
         throw std::runtime_error("Argument out of range in pow");
     }
 
@@ -164,4 +170,14 @@ std::string ListNode::evaluate_pow() {
     }
 
     return std::to_string(result);
+}
+
+std::string ListNode::evaluate_as_string() {
+    std::string buffer;
+
+    for (auto & node : nodes) {
+        buffer += node->evaluate() + " ";
+    }
+
+    return buffer;
 }

@@ -53,6 +53,8 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
                     // Keyword or symbol differentiation
                     if (buffer == "define") tokens.emplace_back(TokenType::DEFINE, buffer);
 
+                    else if (buffer == "cons") tokens.emplace_back(TokenType::CONS, buffer);
+
                     else if (buffer == "car") tokens.emplace_back(TokenType::CAR, buffer);
                     else if (buffer == "cdr") tokens.emplace_back(TokenType::CDR, buffer);
 

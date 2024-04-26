@@ -8,6 +8,7 @@
 #include "Nodes/Define.h"
 #include "Nodes/QuoteNode.h"
 #include "Nodes/Relation.h"
+#include "Nodes/Cons.h"
 #include <iostream>
 
 using namespace Tokens;
@@ -42,6 +43,7 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
     Token token = *it++;
 
     std::shared_ptr<Node> node;
+    std::shared_ptr<ListNode> list;
 
     switch (token.get_type()) {
         case TokenType::OPEN_PAREN:
@@ -92,6 +94,15 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
             break;
         case TokenType::RELATION:
             node = parse_relation(it, end);
+            break;
+        case TokenType::CAR:
+            node = parse_car(it, end);
+            break;
+        case TokenType::CDR:
+            node = parse_cdr(it, end);
+            break;
+        case TokenType::CONS:
+            node = parse_cons(it, end);
             break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
@@ -263,7 +274,8 @@ std::shared_ptr<Node> Parser::parse_set(std::vector<Token>::iterator &it, const 
     return std::make_shared<SetNode>(varName, arg, variables);
 }
 
-std::shared_ptr<Node> Parser::parse_relation(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+std::shared_ptr<Node>
+Parser::parse_relation(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     --it; // Move back to the operator
 
     if (it == end) {
@@ -291,17 +303,87 @@ std::shared_ptr<Node> Parser::parse_relation(std::vector<Token>::iterator &it, c
 
 std::shared_ptr<Node> Parser::parse_car(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     if (it->get_type() != TokenType::QUOTE) {
-        throw std::runtime_error("Expected ' after 'car'");
+        throw std::runtime_error("Syntax Error, expected quote");
     }
 
-    ++it; // move past the quote
+    std::shared_ptr<CarNode> car = std::make_shared<CarNode>();
 
+    ++it; // advance past quote
+    ++it; // advance past open paren
 
+    while (it->get_type() != TokenType::CLOSE_PAREN) {
+        car->add_node(parse_expression(it, end));
+    }
 
+    ++it; // advance past close paren
 
-    auto list = parse_expression(it, end);
+    return car;
 }
 
 std::shared_ptr<Node> Parser::parse_cdr(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
-    return std::shared_ptr<Node>();
+    if (it->get_type() != TokenType::QUOTE) {
+        throw std::runtime_error("Syntax Error, expected quote");
+    }
+
+    std::shared_ptr<CdrNode> cdr = std::make_shared<CdrNode>();
+
+    ++it; // advance past quote
+    ++it; // advance past open paren
+
+    while (it->get_type() != TokenType::CLOSE_PAREN) {
+        cdr->add_node(parse_expression(it, end));
+    }
+
+    ++it; // advance past close paren
+
+    return cdr;
+}
+
+#include <stdexcept>
+#include <memory>
+#include "Parser.h"  // Assume necessary includes and namespaces
+
+std::shared_ptr<Node> Parser::parse_cons(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    if (it == end || it->get_type() != TokenType::QUOTE) {
+        throw std::runtime_error("Syntax Error: Expected quote at the beginning of cons expression");
+    }
+
+    std::shared_ptr<Node> car = parse_cons_list(it, end);
+
+    if (it->get_type() == TokenType::OPEN_PAREN) {
+        return parse_cons_list(it, end);
+    }
+
+    if (it == end) {
+        throw std::runtime_error("Syntax Error: Unexpected end of input, expected second expression within cons");
+    }
+
+    ++it; // advance past quote
+
+    std::shared_ptr<Node> cdr = parse_cons_list(it, end);
+
+    if (it == end || it->get_type() != TokenType::CLOSE_PAREN) {
+        throw std::runtime_error("Syntax Error: Expected close parenthesis after cons expressions");
+    }
+
+    ++it; // advance past close paren
+
+    return std::make_shared<ConsNode>(car, cdr); // Return a new ConsNode constructed with car and cdr
+}
+
+std::shared_ptr<ListNode>
+Parser::parse_cons_list(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    std::shared_ptr<ListNode> list = std::make_shared<ListNode>();
+
+    while (it->get_type() == TokenType::OPEN_PAREN || it->get_type() == TokenType::QUOTE) {
+        ++it;
+    }
+
+    while (it != end && it->get_type() != TokenType::CLOSE_PAREN && it->get_type() != TokenType::QUOTE) {
+        std::shared_ptr<SymbolNode> sym = std::make_shared<SymbolNode>(it->get_value());
+        list->add_node(sym);
+        ++it;
+    }
+
+    return list;
 }
