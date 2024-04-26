@@ -24,13 +24,9 @@ int main() {
             break;
         }
 
-        try {
-            parsed = parser(input);
-            std::cout << evaluator(parsed) << std::endl;
-        } catch (std::runtime_error &e) {
-            std::cout << e.what() << std::endl;
-            continue;
-        }
+        parsed = parser(input);
+        std::cout << evaluator(parsed) << std::endl;
+
     }
 
 

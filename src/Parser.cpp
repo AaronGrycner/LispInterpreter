@@ -7,6 +7,7 @@
 #include "Nodes/Conditional.h"
 #include "Nodes/Define.h"
 #include "Nodes/QuoteNode.h"
+#include "Nodes/Relation.h"
 #include <iostream>
 
 using namespace Tokens;
@@ -88,6 +89,9 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
             break;
         case TokenType::SET:
             node = parse_set(it, end);
+            break;
+        case TokenType::RELATION:
+            node = parse_relation(it, end);
             break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
@@ -257,4 +261,30 @@ std::shared_ptr<Node> Parser::parse_set(std::vector<Token>::iterator &it, const 
     auto arg = parse_expression(it, end);
 
     return std::make_shared<SetNode>(varName, arg, variables);
+}
+
+std::shared_ptr<Node> Parser::parse_relation(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    --it; // Move back to the operator
+
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input after relation operator");
+    }
+
+    std::string op = it->get_value();
+
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input after relation operator");
+    }
+
+    ++it;
+
+    std::shared_ptr<Node> left = parse_expression(it, end);
+
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input after left operand of relation");
+    }
+
+    std::shared_ptr<Node> right = parse_expression(it, end);
+
+    return std::make_shared<RelationNode>(op, left, right);
 }

@@ -20,9 +20,7 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
             int32_t num;
             iss >> num;
             tokens.emplace_back(TokenType::NUMBER, std::to_string(num));
-        }
-
-        else {
+        } else {
             switch (ch) {
                 case '(':
                     tokens.emplace_back(TokenType::OPEN_PAREN, "(");
@@ -34,10 +32,13 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
                     tokens.emplace_back(TokenType::QUOTE, "'");
                     break;
                 case '>':
-                    tokens.emplace_back(TokenType::SYMBOL, ">");
+                    tokens.emplace_back(TokenType::RELATION, ">");
                     break;
                 case '<':
-                    tokens.emplace_back(TokenType::SYMBOL, "<");
+                    tokens.emplace_back(TokenType::RELATION, "<");
+                    break;
+                case '=':
+                    tokens.emplace_back(TokenType::RELATION, "=");
                     break;
                 default:
                     // Handle other symbols as identifiers or error
@@ -51,6 +52,15 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
 
                     // Keyword or symbol differentiation
                     if (buffer == "define") tokens.emplace_back(TokenType::DEFINE, buffer);
+                    else if (buffer == "and") tokens.emplace_back(TokenType::RELATION, buffer);
+                    else if (buffer == "or") tokens.emplace_back(TokenType::RELATION, buffer);
+                    else if (buffer == "not") tokens.emplace_back(TokenType::RELATION, buffer);
+                    else if (buffer == "!=") tokens.emplace_back(TokenType::RELATION, buffer);
+                    else if (buffer == "+") tokens.emplace_back(TokenType::SYMBOL, buffer);
+                    else if (buffer == "-") tokens.emplace_back(TokenType::SYMBOL, buffer);
+                    else if (buffer == "*") tokens.emplace_back(TokenType::SYMBOL, buffer);
+                    else if (buffer == "/") tokens.emplace_back(TokenType::SYMBOL, buffer);
+                    else if (buffer == "quote") tokens.emplace_back(TokenType::QUOTE, buffer);
                     else if (buffer == "set!") tokens.emplace_back(TokenType::SET, buffer);
                     else if (buffer == "if") tokens.emplace_back(TokenType::CONDITIONAL, buffer);
                     else if (buffer == "lambda") tokens.emplace_back(TokenType::LAMBDA, buffer);

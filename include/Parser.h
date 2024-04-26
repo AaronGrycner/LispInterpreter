@@ -24,6 +24,7 @@ private:
     std::shared_ptr<Node> parse_define(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
     std::shared_ptr<Node> parse_defun(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
     std::shared_ptr<Node> parse_set(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
+    std::shared_ptr<Node> parse_relation(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
 
     std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
     std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> functions;

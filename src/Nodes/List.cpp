@@ -22,6 +22,8 @@ std::string ListNode::evaluate() {
             return nodes.at(0)->evaluate();
         case NodeType::SET:
             return nodes.at(0)->evaluate();
+        case NodeType::RELATION:
+            return nodes.at(0)->evaluate();
         default:
             throw std::runtime_error("Unexpected token type in list");
     }
