@@ -16,7 +16,7 @@ namespace Tokens {
         SET,         // Set! symbol for variable assignment
         CONDITIONAL,          // If conditional
         LAMBDA,      // Lambda function definition
-        DEFUN       // Function definition
+        DEFUN        // Function definition
     };
 
     class Token {

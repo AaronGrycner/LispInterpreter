@@ -26,8 +26,30 @@ public:
     }
 
     std::string evaluate() override {
-        variables->insert({name, value->evaluate()});
+        (*variables)[name] = value->evaluate();
         return "";
+    }
+};
+
+class SetNode : public Node {
+private:
+    std::string name;
+    std::shared_ptr<Node> statement;
+    std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
+
+public:
+    SetNode(std::string name, std::shared_ptr<Node> s, std::shared_ptr<std::unordered_map<std::string, std::string>> vars)
+    : name(std::move(name)), statement(std::move(s)), variables(std::move(vars)) {
+        type = SET;
+    }
+
+    std::string evaluate() override {
+        if(variables->find(name) == variables->end()) {
+            throw std::runtime_error("Variable " + name + " not defined");
+        }
+
+        auto value = std::make_shared<NumberNode>(stoi(statement->evaluate()));
+        return DefineNode(name, value, variables).evaluate();
     }
 };
 

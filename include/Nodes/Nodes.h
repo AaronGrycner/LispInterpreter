@@ -17,7 +17,8 @@ enum NodeType {
     DEFINE,
     QUOTE,
     DEFUN,
-    FUNCTION
+    FUNCTION,
+    SET
 };
 
 class Node {

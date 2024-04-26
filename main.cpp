@@ -27,10 +27,10 @@ int main() {
         try {
             parsed = parser(input);
             std::cout << evaluator(parsed) << std::endl;
-        } catch (std::runtime_error& e) {
-            std::cout << "ERROR: " << e.what() << std::endl;
+        } catch (std::runtime_error &e) {
+            std::cout << e.what() << std::endl;
+            continue;
         }
-
     }
 
 

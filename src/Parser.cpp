@@ -32,7 +32,8 @@ NodeVec Parser::operator()(const std::string &input) {
     return nodes;
 }
 
-std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+std::shared_ptr<Node>
+Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     if (it == end) {
         throw std::runtime_error("Unexpected end of input");
     }
@@ -55,8 +56,7 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             if (variables->find(token.get_value()) != variables->end()) {
                 node = std::make_shared<NumberNode>(std::stod(variables->at(token.get_value())));
                 break;
-            }
-            else if (functions->find(token.get_value()) != functions->end()) {
+            } else if (functions->find(token.get_value()) != functions->end()) {
                 auto function = functions->at(token.get_value());
                 int counter{};
 
@@ -66,7 +66,9 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
                 }
 
                 if (counter != function->get_num_args()) {
-                    throw std::runtime_error("Expected " + std::to_string(function->get_num_args()) + " arguments, got " + std::to_string(counter));
+                    throw std::runtime_error(
+                            "Expected " + std::to_string(function->get_num_args()) + " arguments, got " +
+                            std::to_string(counter));
                 }
 
                 node = function;
@@ -84,6 +86,9 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
         case TokenType::DEFUN:
             node = parse_defun(it, end);
             break;
+        case TokenType::SET:
+            node = parse_set(it, end);
+            break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
     }
@@ -91,7 +96,8 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
     return node;
 }
 
-std::shared_ptr<ListNode> Parser::parse_list(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+std::shared_ptr<ListNode>
+Parser::parse_list(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     std::shared_ptr<ListNode> list = std::make_shared<ListNode>();
 
     while (it != end && it->get_type() != TokenType::CLOSE_PAREN) {
@@ -107,7 +113,8 @@ std::shared_ptr<ListNode> Parser::parse_list(std::vector<Token>::iterator &it, c
     return list;
 }
 
-std::shared_ptr<ConditionalNode> Parser::parse_conditional(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+std::shared_ptr<ConditionalNode>
+Parser::parse_conditional(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     if (it == end) {
         throw std::runtime_error("Unexpected end of input");
     }
@@ -134,7 +141,8 @@ std::shared_ptr<ConditionalNode> Parser::parse_conditional(std::vector<Token>::i
 }
 
 // Adjusted parse_condition to handle unary operators
-std::shared_ptr<Node> Parser::parse_condition(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+std::shared_ptr<Node>
+Parser::parse_condition(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
     if (it == end) throw std::runtime_error("Unexpected end of input while parsing condition");
     if (it->get_type() != TokenType::OPEN_PAREN) throw std::runtime_error("Expected '(' at start of condition");
     ++it;
@@ -219,7 +227,7 @@ std::shared_ptr<Node> Parser::parse_defun(std::vector<Token>::iterator &it, cons
     }
 
     ++it;
-    while(it->get_type() != TokenType::CLOSE_PAREN) {
+    while (it->get_type() != TokenType::CLOSE_PAREN) {
         if (it->get_type() != TokenType::SYMBOL) {
             throw std::runtime_error("Expected symbol in args list");
         }
@@ -231,4 +239,22 @@ std::shared_ptr<Node> Parser::parse_defun(std::vector<Token>::iterator &it, cons
 
     f = std::make_shared<FunctionNode>(args, oper);
     return std::make_shared<FunctionDefineNode>(functionName, f, functions);
+}
+
+std::shared_ptr<Node> Parser::parse_set(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input after 'set'");
+    }
+
+    if (it->get_type() != TokenType::SYMBOL) {
+        throw std::runtime_error("Expected var name after 'set'");
+    }
+
+    std::string varName = it->get_value();
+
+    ++it; // move past the name
+
+    auto arg = parse_expression(it, end);
+
+    return std::make_shared<SetNode>(varName, arg, variables);
 }
