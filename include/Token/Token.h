@@ -17,7 +17,9 @@ namespace Tokens {
         CONDITIONAL,          // If conditional
         LAMBDA,      // Lambda function definition
         DEFUN,        // Function definition
-        RELATION
+        RELATION,
+        CAR,
+        CDR
     };
 
     class Token {

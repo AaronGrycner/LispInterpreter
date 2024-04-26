@@ -19,7 +19,10 @@ private:
     std::string evaluate_sub();
     std::string evaluate_mult();
     std::string evaluate_div();
-
+    std::string evaluate_sqrt();
+    std::string evaluate_pow();
+    std::string evaluate_car();
+    std::string evaluate_cdr();
 
 public:
     ListNode() {

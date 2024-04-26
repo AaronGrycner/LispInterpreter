@@ -288,3 +288,20 @@ std::shared_ptr<Node> Parser::parse_relation(std::vector<Token>::iterator &it, c
 
     return std::make_shared<RelationNode>(op, left, right);
 }
+
+std::shared_ptr<Node> Parser::parse_car(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    if (it->get_type() != TokenType::QUOTE) {
+        throw std::runtime_error("Expected ' after 'car'");
+    }
+
+    ++it; // move past the quote
+
+
+
+
+    auto list = parse_expression(it, end);
+}
+
+std::shared_ptr<Node> Parser::parse_cdr(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    return std::shared_ptr<Node>();
+}
