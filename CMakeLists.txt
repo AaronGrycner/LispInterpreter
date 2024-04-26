@@ -22,6 +22,7 @@ add_executable(LispInterpreter main.cpp
         include/Nodes/Define.h
         include/Nodes/QuoteNode.h
         include/Nodes/QuoteNode.h
+        include/Nodes/Function.h
 )
 
 target_include_directories(LispInterpreter PUBLIC

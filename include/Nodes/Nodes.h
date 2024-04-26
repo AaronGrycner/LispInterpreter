@@ -15,7 +15,9 @@ enum NodeType {
     NUMBER,
     CONDITIONAL,
     DEFINE,
-    QUOTE
+    QUOTE,
+    DEFUN,
+    FUNCTION
 };
 
 class Node {

@@ -12,10 +12,11 @@
 
 #include "Nodes.h"
 #include "Atoms.h"
+#include "Function.h"
 
 class DefineNode : public Node {
 private:
-    std:: string name;
+    std::string name;
     std::shared_ptr<Node> value;
     std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
 
@@ -29,5 +30,26 @@ public:
         return "";
     }
 };
+
+class FunctionDefineNode : public Node {
+private:
+    std::string name;
+    std::shared_ptr<FunctionNode> func;
+    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> functions;
+
+public:
+    FunctionDefineNode(std::string n, std::shared_ptr<FunctionNode> a, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> funcs)
+    : name(std::move(n)), func(std::move(a)), functions(std::move(funcs))
+    {
+        type = DEFUN;
+    }
+
+    std::string evaluate() override {
+        functions->insert({name, func});
+        return "";
+    }
+};
+
+
 
 #endif //LISPINTERPRETER_DEFINE_H

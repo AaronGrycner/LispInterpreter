@@ -22,10 +22,17 @@ private:
     std::shared_ptr<ConditionalNode> parse_conditional(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
     std::shared_ptr<Node> parse_condition(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
     std::shared_ptr<Node> parse_define(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
+    std::shared_ptr<Node> parse_defun(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
 
     std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
+    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> functions;
+
 public:
-    explicit Parser(std::shared_ptr<std::unordered_map<std::string, std::string>> variables) : variables(std::move(variables)) {};
+    explicit Parser(std::shared_ptr<std::unordered_map<std::string, std::string>> variables,
+                    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> functions)
+                    : variables(std::move(variables)),
+                        functions(std::move(functions)) {}
+
     std::vector<std::shared_ptr<Node>> operator()(const std::string &input);
 
 };

@@ -16,6 +16,10 @@ std::string ListNode::evaluate() {
             return nodes.at(0)->evaluate();
         case NodeType::DEFINE:
             return nodes.at(0)->evaluate();
+        case NodeType::DEFUN:
+            return nodes.at(0)->evaluate();
+        case NodeType::FUNCTION:
+            return nodes.at(0)->evaluate();
         default:
             throw std::runtime_error("Unexpected token type in list");
     }

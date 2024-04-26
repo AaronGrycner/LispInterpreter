@@ -10,13 +10,19 @@
 
 #include "Nodes/Nodes.h"
 #include "Nodes/Define.h"
+#include "Nodes/List.h"
 
 class Evaluator {
 private:
     std::shared_ptr<std::unordered_map<std::string, std::string>> variables;
+    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> functions;
 
 public:
-    explicit Evaluator(std::shared_ptr<std::unordered_map<std::string, std::string>> vars) : variables(std::move(vars)) {}
+    explicit Evaluator(std::shared_ptr<std::unordered_map<std::string, std::string>> vars,
+                       std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>> funcs)
+    : variables(std::move(vars)),
+    functions(std::move(funcs)) {}
+
     std::string operator()(const std::vector<std::shared_ptr<Node>>& node);
 
 };

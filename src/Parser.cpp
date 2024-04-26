@@ -52,12 +52,20 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             node = std::make_shared<BooleanNode>(token.get_value() == "T");
             break;
         case TokenType::SYMBOL:
-
             if (variables->find(token.get_value()) != variables->end()) {
                 node = std::make_shared<NumberNode>(std::stod(variables->at(token.get_value())));
                 break;
             }
+            else if (functions->find(token.get_value()) != functions->end()) {
+                auto function = functions->at(token.get_value());
 
+                for (int i{}; i < function->get_num_args(); ++i) {
+                    function->set_argument(parse_expression(it, end));
+                }
+
+                node = function;
+                break;
+            }
             node = std::make_shared<SymbolNode>(token.get_value());
             break;
 
@@ -66,6 +74,9 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             break;
         case TokenType::DEFINE:
             node = parse_define(it, end);
+            break;
+        case TokenType::DEFUN:
+            node = parse_defun(it, end);
             break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
@@ -169,3 +180,49 @@ std::shared_ptr<Node> Parser::parse_define(std::vector<Token>::iterator &it, con
     return std::make_shared<DefineNode>(varName, value, variables);
 }
 
+std::shared_ptr<Node> Parser::parse_defun(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    int args{};
+    std::shared_ptr<FunctionNode> f;
+    std::shared_ptr<SymbolNode> oper;
+
+    if (it == end) {
+        throw std::runtime_error("Unexpected end of input after 'defun'");
+    }
+
+    // Expecting the next token to be OPEN_PAREN for the function declaration
+    if (it->get_type() != TokenType::OPEN_PAREN) {
+        throw std::runtime_error("Expected '(' after 'defun'");
+    }
+    ++it; // Move past the OPEN_PAREN
+
+    // Now expecting the function name
+    if (it == end || it->get_type() != TokenType::SYMBOL) {
+        throw std::runtime_error("Expected function name in function definition");
+    }
+    std::string functionName = it->get_value();
+
+    ++it; // Move past the function name to close parenthesis
+    ++it; // move past close parenthesis to the open parenthsis of the operator list
+    ++it; // move past open parenthesis to the first operator
+
+    // Parse the operator
+    if (it == end || it->get_type() != TokenType::SYMBOL) {
+        throw std::runtime_error("Expected operator");
+    } else {
+        oper = std::make_shared<SymbolNode>(it->get_value());
+    }
+
+    ++it;
+    while(it->get_type() != TokenType::CLOSE_PAREN) {
+        if (it->get_type() != TokenType::SYMBOL) {
+            throw std::runtime_error("Expected symbol in args list");
+        }
+        ++args;
+        ++it;
+    }
+
+    ++it;
+
+    f = std::make_shared<FunctionNode>(args, oper);
+    return std::make_shared<FunctionDefineNode>(functionName, f, functions);
+}
