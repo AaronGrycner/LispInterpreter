@@ -21,6 +21,17 @@ public:
     }
 
     std::string evaluate() override {
+        auto it = arguments.begin();
+        for (const auto& arg : arguments) {
+            if (arg->get_type() == LIST) {
+                std::string buffer;
+                buffer = arg->evaluate();
+                auto new_node = std::make_shared<NumberNode>(stoi(buffer));
+                arguments.erase(it);
+                arguments.insert(it, new_node);
+            }
+            ++it;
+        }
 
         arguments.insert(arguments.begin(), operation);
         auto eval_node = ListNode(arguments);
@@ -34,10 +45,6 @@ public:
 
     void set_argument(const std::shared_ptr<Node>& arg) {
         arguments.push_back(arg);
-
-        if (arguments.size() > num_args) {
-            throw std::runtime_error("Too many arguments for function");
-        }
     }
 };
 

@@ -58,9 +58,15 @@ std::shared_ptr<Node> Parser::parse_expression(std::vector<Token>::iterator &it,
             }
             else if (functions->find(token.get_value()) != functions->end()) {
                 auto function = functions->at(token.get_value());
+                int counter{};
 
-                for (int i{}; i < function->get_num_args(); ++i) {
+                while (it != end && it->get_type() != TokenType::CLOSE_PAREN) {
                     function->set_argument(parse_expression(it, end));
+                    ++counter;
+                }
+
+                if (counter != function->get_num_args()) {
+                    throw std::runtime_error("Expected " + std::to_string(function->get_num_args()) + " arguments, got " + std::to_string(counter));
                 }
 
                 node = function;
