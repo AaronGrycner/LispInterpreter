@@ -31,6 +31,8 @@ std::string ListNode::evaluate() {
             return nodes.at(0)->evaluate();
         case NodeType::CONS:
             return nodes.at(0)->evaluate();
+        case NodeType::MAPCAR:
+            return nodes.at(0)->evaluate();
         default:
             throw std::runtime_error("Unexpected node type in list");
     }
@@ -175,7 +177,7 @@ std::string ListNode::evaluate_pow() {
 std::string ListNode::evaluate_as_string() {
     std::string buffer;
 
-    for (auto & node : nodes) {
+    for (auto &node: nodes) {
         buffer += node->evaluate() + " ";
     }
 

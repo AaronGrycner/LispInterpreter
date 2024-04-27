@@ -22,7 +22,7 @@ public:
 
     std::string evaluate() override {
         auto it = arguments.begin();
-        for (const auto& arg : arguments) {
+        for (const auto &arg: arguments) {
             if (arg->get_type() == LIST) {
                 std::string buffer;
                 buffer = arg->evaluate();
@@ -43,9 +43,43 @@ public:
         return num_args;
     }
 
-    void set_argument(const std::shared_ptr<Node>& arg) {
+    void set_argument(const std::shared_ptr<Node> &arg) {
         arguments.push_back(arg);
     }
+
+    std::string get_operation() {
+        return operation->get_value();
+    }
 };
+
+class MapcarNode : public Node {
+private:
+    std::shared_ptr<SymbolNode> operation;
+    std::shared_ptr<ListNode> list;
+public:
+    MapcarNode(std::shared_ptr<SymbolNode> o, std::shared_ptr<ListNode> lst) : operation(std::move(o)),
+                                                                                list(std::move(lst)) {
+        type = MAPCAR;
+    }
+
+    std::string evaluate() override {
+        std::string buffer;
+        std::vector<std::shared_ptr<ListNode>> args;
+
+        for (const auto &lst: list->get_nodes()) {
+            auto new_node = std::make_shared<ListNode>();
+            new_node->add_node(operation);
+            new_node->add_node(lst);
+            args.push_back(new_node);
+        }
+
+        for (auto &arg: args) {
+            buffer += arg->evaluate() + " ";
+        }
+
+        return buffer;
+    }
+};
+
 
 #endif // LISPINTERPRETER_FUNCTION_H

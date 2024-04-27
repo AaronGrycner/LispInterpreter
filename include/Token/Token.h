@@ -20,7 +20,8 @@ namespace Tokens {
         RELATION,
         CAR,
         CDR,
-        CONS
+        CONS,
+        MAPCAR
     };
 
     class Token {

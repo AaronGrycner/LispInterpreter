@@ -104,6 +104,9 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
         case TokenType::CONS:
             node = parse_cons(it, end);
             break;
+        case TokenType::MAPCAR:
+            node = parse_mapcar(it, end);
+            break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
     }
@@ -386,4 +389,30 @@ Parser::parse_cons_list(std::vector<Token>::iterator &it, const std::vector<Toke
     }
 
     return list;
+}
+
+std::shared_ptr<Node> Parser::parse_mapcar(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    std::shared_ptr<ListNode> list;
+    std::shared_ptr<SymbolNode> oper;
+
+    if (it == end || it->get_type() != TokenType::QUOTE) {
+        throw std::runtime_error("Syntax Error: Expected quote at the beginning of mapcar expression");
+    }
+
+    ++it; // advance past quote
+
+    oper = std::make_shared<SymbolNode>(it->get_value()); // get the operator
+
+    ++it; // advance past operator
+    ++it; // advance past quote
+
+    list = parse_cons_list(it, end);
+
+    ++it;
+
+    return std::shared_ptr<MapcarNode>(std::make_shared<MapcarNode>(oper, list));
+}
+
+std::shared_ptr<Node> Parser::parse_lambda(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    return std::shared_ptr<Node>();
 }

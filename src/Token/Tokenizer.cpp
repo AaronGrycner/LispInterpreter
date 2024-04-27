@@ -57,6 +57,7 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
 
                     else if (buffer == "car") tokens.emplace_back(TokenType::CAR, buffer);
                     else if (buffer == "cdr") tokens.emplace_back(TokenType::CDR, buffer);
+                    else if (buffer == "mapcar") tokens.emplace_back(TokenType::MAPCAR, buffer);
 
                     else if (buffer == "and") tokens.emplace_back(TokenType::RELATION, buffer);
                     else if (buffer == "or") tokens.emplace_back(TokenType::RELATION, buffer);

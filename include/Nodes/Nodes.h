@@ -22,7 +22,9 @@ enum NodeType {
     RELATION,
     CAR,
     CDR,
-    CONS
+    CONS,
+    MAPCAR,
+    LAMBDA
 };
 
 class Node {
