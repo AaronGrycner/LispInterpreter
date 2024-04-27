@@ -105,6 +105,9 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
         case TokenType::MAPCAR:
             node = parse_mapcar(it, end);
             break;
+        case TokenType::LAMBDA:
+            node = parse_lambda(it, end);
+            break;
         default:
             throw std::runtime_error("Unexpected token: " + token.get_value());
     }
@@ -412,6 +415,33 @@ std::shared_ptr<Node> Parser::parse_mapcar(std::vector<Token>::iterator &it, con
     return std::shared_ptr<MapcarNode>(std::make_shared<MapcarNode>(oper, list));
 }
 
-std::shared_ptr<Node> Parser::parse_lambda(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
-    return std::shared_ptr<Node>();
+std::shared_ptr<FunctionNode>
+Parser::parse_lambda(std::vector<Token>::iterator &it, const std::vector<Token>::iterator &end) {
+    int args{};
+    std::shared_ptr<FunctionNode> fn;
+
+    ++it;
+
+    while (it->get_type() != TokenType::CLOSE_PAREN) {
+        ++args;
+        ++it;
+    }
+    ++it; // advance past close paren
+    ++it; // advance past open paren
+
+    std::shared_ptr<SymbolNode> oper = std::make_shared<SymbolNode>(it->get_value());
+
+    while (it->get_type() != TokenType::CLOSE_PAREN) {
+        ++it;
+    }
+
+    ++it; // advance past close paren
+
+    fn = std::make_shared<FunctionNode>(args, oper);
+
+    while (it->get_type() != TokenType::CLOSE_PAREN) {
+        fn->set_argument(parse_expression(it, end));
+    }
+
+    return fn;
 }
