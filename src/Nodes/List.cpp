@@ -33,6 +33,8 @@ std::string ListNode::evaluate() {
             return nodes.at(0)->evaluate();
         case NodeType::MAPCAR:
             return nodes.at(0)->evaluate();
+        case NodeType::LAMBDA:
+            return nodes.at(0)->evaluate();
         default:
             throw std::runtime_error("Unexpected node type in list");
     }

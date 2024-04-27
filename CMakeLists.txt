@@ -3,7 +3,6 @@ project(LispInterpreter)
 
 set(CMAKE_CXX_STANDARD 17)
 
-
 add_executable(LispInterpreter main.cpp
         include/Nodes/Nodes.h
         src/Parser.cpp
@@ -14,8 +13,6 @@ add_executable(LispInterpreter main.cpp
         include/Nodes/Atoms.h
         src/Nodes/List.cpp
         include/Nodes/List.h
-        src/Symbols/SymbolTable.cpp
-        include/Symbols/SymbolTable.h
         src/Evaluator.cpp
         include/Evaluator.h
         include/Nodes/Conditional.h
@@ -30,5 +27,5 @@ add_executable(LispInterpreter main.cpp
 target_include_directories(LispInterpreter PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         include
-        include/Lists
-        include/Lists/Atoms)
+        include/Token
+        include/Nodes)

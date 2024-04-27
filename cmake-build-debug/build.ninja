@@ -52,42 +52,35 @@ build cmake_object_order_depends_target_LispInterpreter: phony || CMakeFiles/Lis
 build CMakeFiles/LispInterpreter.dir/main.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/main.cpp || cmake_object_order_depends_target_LispInterpreter
   DEP_FILE = CMakeFiles/LispInterpreter.dir/main.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
+  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Token -I/home/aaron/CLionProjects/LispInterpreter/include/Nodes
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir
 
 build CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Parser.cpp || cmake_object_order_depends_target_LispInterpreter
   DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
+  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Token -I/home/aaron/CLionProjects/LispInterpreter/include/Nodes
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src
 
 build CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Token/Tokenizer.cpp || cmake_object_order_depends_target_LispInterpreter
   DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
+  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Token -I/home/aaron/CLionProjects/LispInterpreter/include/Nodes
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src/Token
 
 build CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Nodes/List.cpp || cmake_object_order_depends_target_LispInterpreter
   DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
+  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Token -I/home/aaron/CLionProjects/LispInterpreter/include/Nodes
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src/Nodes
-
-build CMakeFiles/LispInterpreter.dir/src/Symbols/SymbolTable.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Symbols/SymbolTable.cpp || cmake_object_order_depends_target_LispInterpreter
-  DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Symbols/SymbolTable.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
-  OBJECT_DIR = CMakeFiles/LispInterpreter.dir
-  OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src/Symbols
 
 build CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o: CXX_COMPILER__LispInterpreter_unscanned_Debug /home/aaron/CLionProjects/LispInterpreter/src/Evaluator.cpp || cmake_object_order_depends_target_LispInterpreter
   DEP_FILE = CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
-  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Lists -I/home/aaron/CLionProjects/LispInterpreter/include/Lists/Atoms
+  INCLUDES = -I/home/aaron/CLionProjects/LispInterpreter -I/home/aaron/CLionProjects/LispInterpreter/include -I/home/aaron/CLionProjects/LispInterpreter/include/Token -I/home/aaron/CLionProjects/LispInterpreter/include/Nodes
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   OBJECT_FILE_DIR = CMakeFiles/LispInterpreter.dir/src
 
@@ -99,7 +92,7 @@ build CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o: CXX_COMPILER__LispInte
 #############################################
 # Link the executable LispInterpreter
 
-build LispInterpreter: CXX_EXECUTABLE_LINKER__LispInterpreter_Debug CMakeFiles/LispInterpreter.dir/main.cpp.o CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o CMakeFiles/LispInterpreter.dir/src/Symbols/SymbolTable.cpp.o CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o
+build LispInterpreter: CXX_EXECUTABLE_LINKER__LispInterpreter_Debug CMakeFiles/LispInterpreter.dir/main.cpp.o CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/LispInterpreter.dir
   POST_BUILD = :

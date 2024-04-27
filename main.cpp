@@ -1,5 +1,5 @@
 #include "Parser.h"
-#include "Token/Tokenizer.h"
+#include "Tokenizer.h"
 #include "Evaluator.h"
 #include <iostream>
 
@@ -38,10 +38,13 @@ int main() {
             break;
         }
 
-        parsed = parser(input);
-        std::cout << evaluator(parsed) << std::endl;
+        try {
+            parsed = parser(input);
+            std::cout << evaluator(parsed) << std::endl;
+        } catch (std::runtime_error &e) {
+            std::cout << e.what() << std::endl;
+        }
 
+        return 0;
     }
-
-    return 0;
 }

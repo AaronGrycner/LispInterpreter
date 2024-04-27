@@ -30,7 +30,7 @@ private:
     std::shared_ptr<Node> parse_cons(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
     std::shared_ptr<ListNode> parse_cons_list(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
     std::shared_ptr<Node> parse_mapcar(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
-    std::shared_ptr<Node> parse_lambda(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
+    std::shared_ptr<FunctionNode> parse_lambda(std::vector<Tokens::Token>::iterator &it, const std::vector<Tokens::Token>::iterator &end);
 
 
 
