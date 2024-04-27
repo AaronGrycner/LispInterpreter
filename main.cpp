@@ -1,12 +1,16 @@
 #include "Parser.h"
-#include "Token/Tokenizer.h"
+#include "include/Tokenizer.h"
 #include "Evaluator.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 // TODO
 // 1. Implement the Parser class
 
 int main() {
+    std::ofstream file("output.txt");
+
     std::unordered_map<std::string, std::string> variables;
     std::unordered_map<std::string, std::shared_ptr<FunctionNode>> functions;
     Parser parser(std::make_shared<std::unordered_map<std::string, std::string>>(variables),
@@ -15,9 +19,11 @@ int main() {
                         std::make_shared<std::unordered_map<std::string, std::shared_ptr<FunctionNode>>>(functions));
     std::vector<std::shared_ptr<Node>> parsed;
 
+    std::cout << "Welcome to the fancy new Prompt LISP INTERPRETER, type in LISP commands!";
+
     while (true) {
+        std::stringstream st;
         std::string input;
-        std::cout << "Welcome to the fancy new Prompt LISP INTERPRETER, type in LISP commands!";
         std::cout << ">";
         std::getline(std::cin, input);
 
@@ -38,9 +44,17 @@ int main() {
             break;
         }
 
-        parsed = parser(input);
-        std::cout << evaluator(parsed) << std::endl;
+        try {
+            parsed = parser(input);
+            st << evaluator(parsed) << std::endl;
+            std::cout << st.str();
+        }
+        catch (std::runtime_error &e) {
+            std::cout << e.what() << std::endl;
+            file << e.what() << std::endl;
+        }
 
+        file << st.str();
     }
 
     return 0;

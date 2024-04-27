@@ -2,13 +2,8 @@
 #include <memory>
 #include <stdexcept>
 #include "Parser.h"
-#include "Token/Tokenizer.h"
-#include "Nodes/Atoms.h"
-#include "Nodes/Conditional.h"
-#include "Nodes/Define.h"
-#include "Nodes/QuoteNode.h"
-#include "Nodes/Relation.h"
-#include "Nodes/Cons.h"
+#include "Tokenizer.h"
+#include "Nodes.h"
 #include <iostream>
 
 using namespace Tokens;
@@ -63,6 +58,7 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
                 auto function = functions->at(token.get_value());
                 int counter{};
 
+                ++it; // Move past the open parenthesis
                 while (it != end && it->get_type() != TokenType::CLOSE_PAREN) {
                     function->set_argument(parse_expression(it, end));
                     ++counter;
@@ -73,6 +69,8 @@ Parser::parse_expression(std::vector<Token>::iterator &it, const std::vector<Tok
                             "Expected " + std::to_string(function->get_num_args()) + " arguments, got " +
                             std::to_string(counter));
                 }
+
+                ++it; // Move past the close parenthesis
 
                 node = function;
                 break;
@@ -221,30 +219,16 @@ std::shared_ptr<Node> Parser::parse_defun(std::vector<Token>::iterator &it, cons
         throw std::runtime_error("Unexpected end of input after 'defun'");
     }
 
-    // Expecting the next token to be OPEN_PAREN for the function declaration
-    if (it->get_type() != TokenType::OPEN_PAREN) {
-        throw std::runtime_error("Expected '(' after 'defun'");
-    }
-    ++it; // Move past the OPEN_PAREN
-
     // Now expecting the function name
     if (it == end || it->get_type() != TokenType::SYMBOL) {
         throw std::runtime_error("Expected function name in function definition");
     }
     std::string functionName = it->get_value();
 
-    ++it; // Move past the function name to close parenthesis
-    ++it; // move past close parenthesis to the open parenthsis of the operator list
+    ++it; // move past function name
     ++it; // move past open parenthesis to the first operator
 
-    // Parse the operator
-    if (it == end || it->get_type() != TokenType::SYMBOL) {
-        throw std::runtime_error("Expected operator");
-    } else {
-        oper = std::make_shared<SymbolNode>(it->get_value());
-    }
-
-    ++it;
+    // Parse args
     while (it->get_type() != TokenType::CLOSE_PAREN) {
         if (it->get_type() != TokenType::SYMBOL) {
             throw std::runtime_error("Expected symbol in args list");
@@ -253,6 +237,21 @@ std::shared_ptr<Node> Parser::parse_defun(std::vector<Token>::iterator &it, cons
         ++it;
     }
 
+    ++it;
+    ++it; // move past close parenthesis to the operator
+
+    // Parse operator
+    if (it == end || it->get_type() != TokenType::SYMBOL) {
+        throw std::runtime_error("Expected operator");
+    } else {
+        oper = std::make_shared<SymbolNode>(it->get_value());
+    }
+
+    for (int i = 0; i < args; ++i) {
+        ++it;
+    }
+
+    ++it;
     ++it;
 
     f = std::make_shared<FunctionNode>(args, oper);

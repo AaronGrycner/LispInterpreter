@@ -1,4 +1,4 @@
-#include "../../include/Nodes/List.h"
+#include "Nodes.h"
 #include <stdexcept>
 #include <iomanip>
 #include <sstream>

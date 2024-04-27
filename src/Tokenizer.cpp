@@ -1,7 +1,7 @@
 #include <sstream>
 #include <cctype>
 #include <cstdint>
-#include "include/Token/Tokenizer.h"
+#include "Tokenizer.h"
 
 using namespace Tokens;
 

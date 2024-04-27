@@ -8,9 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Nodes/Nodes.h"
-#include "Nodes/Define.h"
-#include "Nodes/List.h"
+#include "Nodes.h"
 
 class Evaluator {
 private:

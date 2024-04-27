@@ -5,30 +5,19 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 add_executable(LispInterpreter main.cpp
-        include/Nodes/Nodes.h
+        include/Nodes.h
         src/Parser.cpp
         include/Parser.h
-        include/Token/Token.h
-        src/Token/Tokenizer.cpp
-        include/Token/Tokenizer.h
-        include/Nodes/Atoms.h
-        src/Nodes/List.cpp
-        include/Nodes/List.h
-        src/Symbols/SymbolTable.cpp
-        include/Symbols/SymbolTable.h
+        include/Token.h
+        src/Tokenizer.cpp
+        include/Tokenizer.h
+        src/Nodes.cpp
         src/Evaluator.cpp
         include/Evaluator.h
-        include/Nodes/Conditional.h
-        include/Nodes/Define.h
-        include/Nodes/QuoteNode.h
-        include/Nodes/QuoteNode.h
-        include/Nodes/Function.h
-        include/Nodes/Relation.h
-        include/Nodes/Cons.h
+        src/Nodes.cpp
+        src/Tokenizer.cpp
 )
 
 target_include_directories(LispInterpreter PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-        include
-        include/Lists
-        include/Lists/Atoms)
+        include)

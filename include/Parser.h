@@ -5,11 +5,8 @@
 #ifndef LISPINTERPRETER_PARSER_H
 #define LISPINTERPRETER_PARSER_H
 
-#include "include/Token/Token.h"
-#include "Nodes/Nodes.h"
-#include "Nodes/List.h"
-#include "Nodes/Conditional.h"
-#include "Nodes/Define.h"
+#include "Token.h"
+#include "Nodes.h"
 
 #include <vector>
 #include <string>

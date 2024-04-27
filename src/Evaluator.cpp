@@ -1,6 +1,6 @@
 #include <sstream>
 #include "Evaluator.h"
-#include "Nodes/List.h"
+#include "Nodes.h"
 
 std::string Evaluator::operator()(const std::vector<std::shared_ptr<Node>>& nodes) {
     std::stringstream result;
