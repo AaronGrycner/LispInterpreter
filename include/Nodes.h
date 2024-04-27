@@ -434,4 +434,35 @@ public:
     }
 };
 
+class LambdaNode : public Node {
+private:
+    std::shared_ptr<ListNode> lambda_list;
+    std::shared_ptr<ListNode> lambda_body;
+
+public:
+    LambdaNode(std::shared_ptr<ListNode> l_list, std::shared_ptr<ListNode> l_body) : lambda_list(std::move(l_list)),
+                                                                                     lambda_body(std::move(l_body)) {
+        type = LAMBDA;
+    }
+
+    std::string evaluate() override {
+        std::string buffer;
+        std::vector<std::shared_ptr<Node>> args;
+        std::vector<std::shared_ptr<Node>> body;
+
+        for (const auto &node: lambda_list->get_nodes()) {
+            args.push_back(node);
+        }
+
+        for (const auto &node: lambda_body->get_nodes()) {
+            body.push_back(node);
+        }
+
+        for (const auto &node: body) {
+            buffer += node->evaluate() + " ";
+        }
+
+        return buffer;
+    }
+};
 #endif //LISPINTERPRETER_NODES_H

@@ -72,7 +72,7 @@ Predefined Operators and Functions:
 Additional Features:
 - The interpreter supports the mapcar and lambda functions as described in the assignment for extra credit.
 - mapcar Example: (mapcar 'sqrt '(4 9 16)) → (2 3 4)
-- lambda Example: ((lambda (x) (+ x 1)) 99) → 100
+- lambda Example: (lambda (x)(+ x x) 3 4) → 7
 
 Usage:
 - Launch the interpreter and type in LISP commands following the syntax rules specified above.

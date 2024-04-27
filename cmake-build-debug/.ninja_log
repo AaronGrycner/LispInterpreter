@@ -1,6 +1,6 @@
 # ninja log v5
 2	534	1714253134455929164	CMakeFiles/LispInterpreter.dir/src/Token/Tokenizer.cpp.o	dfcfa1177d1fb81
-1	22	1714257779662268997	build.ninja	58747df30c3454b
+1	22	1714257847507594015	build.ninja	58747df30c3454b
 1	960	1714257400218858508	CMakeFiles/LispInterpreter.dir/main.cpp.o	b21dc7a316e17ea9
 1	711	1714246026602823409	CMakeFiles/LispInterpreter.dir/src/Nodes/List.cpp.o	fe4e22b2cd149a7b
 914	1390	1714165804294247648	CMakeFiles/LispInterpreter.dir/src/Symbols/SymbolTable.cpp.o	5711d57e54b71ac0
@@ -10,3 +10,10 @@
 2	463	1714253299275127530	CMakeFiles/LispInterpreter.dir/src/Tokenizer.cpp.o	41a2c8d844f62e4a
 2	738	1714257159018145183	CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o	10f4fccdd36ca75e
 2	1950	1714256901057104370	CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o	439d153c1a6e632a
+3	678	1714257866315961338	CMakeFiles/LispInterpreter.dir/src/Tokenizer.cpp.o	41a2c8d844f62e4a
+1	1910	1714257867539985245	CMakeFiles/LispInterpreter.dir/main.cpp.o	b21dc7a316e17ea9
+679	2139	1714257867775989854	CMakeFiles/LispInterpreter.dir/src/Nodes.cpp.o	a6b109ecf47e0fc6
+2	746	1714257936269327510	CMakeFiles/LispInterpreter.dir/src/Evaluator.cpp.o	10f4fccdd36ca75e
+1	987	1714257936521332432	CMakeFiles/LispInterpreter.dir/main.cpp.o	b21dc7a316e17ea9
+2	1933	1714257937465350868	CMakeFiles/LispInterpreter.dir/src/Parser.cpp.o	439d153c1a6e632a
+1933	2080	1714257937613353760	LispInterpreter	ce91741ea907009b
